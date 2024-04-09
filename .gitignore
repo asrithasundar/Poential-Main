@@ -1,0 +1,11 @@
+*.txt
+*.pdf
+.idea/
+__pycache__/
+mpl
+plt
+howToCreateAFile.py
+week 2 functions.py
+week 2.py
+exc5.py
+a.out
