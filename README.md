@@ -1,5 +1,5 @@
 # One-Dimensional Potential Functions Implementation
-This project implements various one-dimensional potential functions using Python and  plots the potential functions alongside their corresponding analytical and numerical derivatives, providing visual representations that elucidated their relationships.
+This project implements various one-dimensional potential functions using Python and  plots the potential functions alongside their corresponding analytical and numerical derivatives, providing visual representations that elucidated their intricate relationships.
 
 ## Implemented Potential Functions
 
