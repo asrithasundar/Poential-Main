@@ -1,3 +1,9 @@
+
+#-----------------------------------------
+#   I M P O R T S
+#-----------------------------------------
+
+
 import numpy as np
 import matplotlib.pyplot as plt
 from numpy.typing import ArrayLike
@@ -7,20 +13,26 @@ class Potential:
     def __init__(self,*args: float):
         self.coefficients=args
 
+
     def f(self,x: ArrayLike):
         #to calculate the potential function,which will be overridden by subclasses
         raise NotImplementedError("subclass must  be implemented abstract method")
 
+    # --------------------------------------------------------------------------
+    #   analytical derivative that  need to be implemented in the child classes
+    # --------------------------------------------------------------------------
     def analytical_derivative(self, x: ArrayLike)->ArrayLike:
         raise NotImplementedError("subclass must  be implemented abstract method")
 
-
+    # ---------------------------------------------------------------------
+    #    numerical derivative that are passed to the child classes
+    # ---------------------------------------------------------------------
     def numerical_derivative(self, x: ArrayLike, h=0.0001):
         """
         define numerical derivative
         Args:
             x: x_values
-            h:0.0001
+            h:spacing of the finite different point along x
 
         Returns:numerical derivative using the equation
 
@@ -60,7 +72,7 @@ class Potential:
 class Linear_Potential(Potential):
     def f(self, x: ArrayLike)-> ArrayLike:
         """
-        define a linear function
+         calculate the linear potential
             Args:
 
                 x:x_value
@@ -69,15 +81,14 @@ class Linear_Potential(Potential):
 
         """
         m, c = self.coefficients
-               #m:slope of the line
-               # c:intercept of the line
+               #m: slope of the line, c:intercept of the line
 
         return m * x + c
 
 
     def analytical_derivative(self,x: ArrayLike):
         """
-        define analytical derivative of a linear function
+        calculate the  analytical derivative of a linear function
             Args:
                 x: x_value
 
@@ -92,7 +103,7 @@ class Linear_Potential(Potential):
 class Quadratic_Potential(Potential):
     def f(self, x: ArrayLike)-> ArrayLike:
         """
-        define quadratic potential
+        calculate the quadratic potential
              Args:
                 x: x_value
 
@@ -108,7 +119,7 @@ class Quadratic_Potential(Potential):
 
     def analytical_derivative(self,x: ArrayLike):
         """
-        define analytical derivative of a quadratic function
+        calculate the analytical derivative of a quadratic potential
             Args:
                 x: x_value
 
@@ -120,7 +131,7 @@ class Quadratic_Potential(Potential):
 class DoubleWell_Potential(Potential):
     def f(self, x: ArrayLike)-> ArrayLike:
         """
-        define double well potential
+        calculate the double well potential
             Args:
                 x: x_value
 
@@ -135,7 +146,7 @@ class DoubleWell_Potential(Potential):
 
     def analytical_derivative(self,x: ArrayLike):
         """
-        define analytical derivative of double well potential
+        calculate the analytical derivative of double well potential
             Args:
                 x: x_value
 
