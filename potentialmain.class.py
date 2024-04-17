@@ -7,7 +7,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from numpy.typing import ArrayLike
-from numpy import gradient
+
 
 class Potential:
     def __init__(self,*args: float):
