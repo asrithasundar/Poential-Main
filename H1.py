@@ -11,9 +11,9 @@ Created on Sat Jan 20 07:05:58 2024
 # -----------------------------------------
 from abc import ABC, abstractmethod
 import numpy as np
-import scipy.constants as const
-from scipy import integrate
-from scipy.optimize import minimize
+#import scipy.constants as const
+#from scipy import integrate
+#from scipy.optimize import minimize
 import matplotlib.pyplot as plt
 
 
@@ -173,7 +173,7 @@ class D1(ABC):
 
         # plotting
 
-    def plot_force(self, x_values):
+    def plot_force(self, x_values,ylim = None):
         """
         plot force_analytical and force_num over a given range of x values,for different h
         """
@@ -204,13 +204,14 @@ class D1(ABC):
         plt.xlabel("x")
         plt.ylabel("force_num / force_analytical")
         plt.legend()
-        plt.ylim()
+        if ylim != None:
+          plt.ylim(*ylim)
         plt.grid()
-        plt.savefig(f"Force numerical and analytical for  {self.__class__.__name__}_fig.pdf")
+        plt.savefig(f"Force_numerical_and_analyticalf_or_{self.__class__.__name__}_fig.pdf")
         plt.show()
 
 
-    def plot_hessian(self,x_values):
+    def plot_hessian(self,x_values,ylim=None):
         """
 
          plot hessian_analytical and hessian_numerical for x_values and different values of h
@@ -236,12 +237,14 @@ class D1(ABC):
         plt.xlabel("x")
         plt.ylabel("hessian_num / hessian_analytical")
         plt.legend()
-        plt.ylim()
+        if ylim !=None:
+
+          plt.ylim(*ylim)
         plt.grid()
-        plt.savefig(f"Hessian numerical and analytical for {self.__class__.__name__}_fig.pdf")
+        plt.savefig(f"Hessian_numerical_and_analytical_for-{self.__class__.__name__}_fig.pdf")
         plt.show()
 
-    def plot_differences(self,x_values):
+    def plot_differences(self,x_values,ylim=None):
         """
         plot difference between analytical and numerical for force
 
@@ -258,9 +261,10 @@ class D1(ABC):
         plt.xlabel("x")
         plt.ylabel("force_num - force_analytical")
         plt.legend()
-        plt.ylim()
+        if ylim != None:
+          plt.ylim(*ylim)
         plt.grid()
-        plt.savefig(f"force_num-force_analytical {self.__class__.__name__}_fig.pdf")
+        plt.savefig(f"force_num-force_analytical_{self.__class__.__name__}_fig.pdf")
         plt.show()
 
 # ------------------------------------------------
@@ -577,13 +581,13 @@ class Double_Well_Potential(D1):
 
         # ----------------------------
 linear = Linear_Potential((2, -3))# linear potential with m=2,c=-3
-linear.plot_force(np.linspace(-10,10,100))
-linear.plot_hessian(np.linspace(-10,10,100))
-linear.plot_differences(np.linspace(-10,10,100))
+linear.plot_force(np.linspace(-10,10,100), (2.7,3.7))
+linear.plot_hessian(np.linspace(-10,10,100),(-1,1))
+linear.plot_differences(np.linspace(-10,10,100),(-0.002,0.002))
 quadratic = Quadratic_Potential((1, -5, 6))  # Quadratic potential with a=1, b=-5, c=6
 quadratic.plot_force(np.linspace(-10,15,100))
-quadratic.plot_hessian(np.linspace(-10,15,100))
-quadratic.plot_differences(np.linspace(-10,15,100))
+quadratic.plot_hessian(np.linspace(-10,15,100),(-2.3,2.3))
+quadratic.plot_differences(np.linspace(-10,15,100),(-0.002,0.002))
 doublewell = Double_Well_Potential((1,2,-19))#double well potential with a=1,b=2,c=-1
 doublewell.plot_force(np.linspace(-1.5,1.5,100))
 doublewell.plot_hessian(np.linspace(-1.5,1.5,100))
