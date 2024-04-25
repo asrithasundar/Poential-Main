@@ -49,7 +49,9 @@ class D1(ABC):
     @abstractmethod
     def hessian(self, x):
         pass
-
+    @abstractmethod
+    def riemann(self,a,b,n):
+        pass
     # -----------------------------------------------------------
     #   numerical methods that are passed to a child class
     # -----------------------------------------------------------
@@ -318,35 +320,51 @@ class Linear_Potential(D1):
         self.coefficients = args
 
     def potential(self, x: ArrayLike) -> ArrayLike:
-            """
-             calculate the linear potential
-                Args:
+        """
+        calculate the linear potential
+        Args:
 
-                    x:x_value
+             x:x_value
 
-                Returns:linear potential for all x
+        Returns:linear potential for all x
 
-            """
-            m, c = self.coefficients
+        """
+        m, c = self.coefficients
 
-            return m * x + c
+        return m * x + c
 
     def force(self, x: ArrayLike):
-            """
-            calculate the  analytical derivative of a linear function
+        """
+        calculate the  analytical derivative of a linear function
                 Args:
                     x: x_value
 
-                Returns:force(analytical derivative) -m
+        Returns:force(analytical derivative) -m
 
-            """
-            m, _ = self.coefficients
+        """
+        m, _ = self.coefficients
 
-            return -1 * np.full_like(x, m)
+        return -1 * np.full_like(x, m)
 
 
     def hessian(self, x):
-        pass
+
+       if isinstance(x, float) or isinstance(x, int):
+         return 0
+       else:
+            # you are allowed to input x as an array, in this case the return is an array the same shape as x
+         return np.full(x.shape, 0)
+
+
+    def riemann(self,a,b,n):
+
+       h = (b - a) / n
+       area = 0
+       for i in range(n):
+            s = a + (i + 0.5) * h
+            area += self.potential(s)* h
+
+       return area
 
 
 
@@ -387,8 +405,27 @@ class Quadratic_Potential(D1):
         return -1 * (a * 2 * x + b)
 
     def hessian(self, x):
-        pass
+        """
+        Calculate the Hessian matrx H(x) analytically for the 1-dimensional quadratic potential.
+        Since the potential is one dimensional, the Hessian matrix has dimensions 1x1.
 
+        The Hessian is given by:
+                H(x) = d^2 V(x) / dx^2
+                     =  2 * self.a
+
+
+
+        Parameters:
+                 - x (float): position
+
+
+        """
+
+        if isinstance(x, float) or isinstance(x, int):
+            return 2 * self.a
+        else:
+            # you are allowed to input x as an array, in this case the return is an array the same shape as x
+            return np.full(x.shape, 2 * self.a)
 
 
 class DoubleWell_Potential(D1):
@@ -429,10 +466,27 @@ class DoubleWell_Potential(D1):
         return -1 * (a * 4 * x ** 3 - b * 2 * x)
 
     def hessian(self, x):
-        pass
+        """
+        Calculate the Hessian matrx H(x) analytically for the 1-dimensional quadratic potential.
+        Since the potential is one dimensional, the Hessian matrix has dimensions 1x1.
+        The Hessian is given by:
+               H(x) = d^2 V(x) / dx^2
+                    = 12 * x **2 * self.a - 2 * self.b
 
 
 
+        Parameters:
+            - x (float): position
+
+
+        """
+
+        return 12 * x ** 2 * self.a - 2 * self.b
+
+
+linear_potential_1= Linear_Potential(2,3)
+print(linear_potential_1.force(1))
+print(linear_potential_1.riemann(-10,10,1000))
 
 
 
