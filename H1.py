@@ -252,6 +252,7 @@ class D1(ABC):
         h_values = [0.1,0.5,1.0]
 
         for i, h in enumerate(h_values):
+
             dy_differences=self.force_num(x_values,h) - self.force(x_values)
 
 
@@ -583,13 +584,12 @@ class Double_Well_Potential(D1):
 linear = Linear_Potential((2, -3))# linear potential with m=2,c=-3
 linear.plot_force(np.linspace(-10,10,100), (2.9,3.1))
 linear.plot_hessian(np.linspace(-10,10,100),(-1,1))
-linear.plot_differences(np.linspace(-10,10,100),(-0.002,0.002))
+linear.plot_differences(np.linspace(-10,10,100),(-0.02,0.02))
 quadratic = Quadratic_Potential((1, -5, 6))  # Quadratic potential with a=1, b=-5, c=6
 quadratic.plot_force(np.linspace(-10,15,100))
 quadratic.plot_hessian(np.linspace(-10,15,100),(-2.3,2.3))
-quadratic.plot_differences(np.linspace(-10,15,100),(-0.002,0.002))
+quadratic.plot_differences(np.linspace(-10,15,100),(-0.02,0.02))
 doublewell = Double_Well_Potential((1,2,-19))#double well potential with a=1,b=2,c=-1
 doublewell.plot_force(np.linspace(-1.5,1.5,100))
 doublewell.plot_hessian(np.linspace(-1.5,1.5,100))
 doublewell.plot_differences(np.linspace(-1.5,1.5,100))
-
