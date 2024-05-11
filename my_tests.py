@@ -67,3 +67,4 @@ if __name__ == "__main__" :
     test_double_well_pot()
 
 
+g
